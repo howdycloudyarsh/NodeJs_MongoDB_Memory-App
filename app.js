@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://ahmadarshad2009:u541nbDpdWQAMLAG@cluster0.2fzvnqg.mongodb.net/memory', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://ahmadarshad2009:u541nbDpdWQAMLAG@cluster0.2fzvnqg.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Middleware | Ex. Parsing 
+// Middleware | Ex. Parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
