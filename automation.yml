@@ -1,0 +1,46 @@
+---
+- name: Setup Node.js App with MongoDB Atlas
+  hosts: all
+  connection: local
+  remote_user: ubuntu
+  become: yes
+
+  tasks:
+    - name: Update package cache
+      apt:
+        name: '*'
+        state: latest
+      become: yes
+
+    - name: Install Node.js
+      shell: |
+        curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+        warn: false
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        state: present
+      become: yes
+
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+      become: yes
+
+    - name: Clone Node.js app from Git
+      git:
+        repo: https://github.com/howdycloudyarsh/NodeJs_MongoDB_Memory-App.git
+        dest: /home/ubuntu/my-node-app
+      become: yes
+
+    - name: Install app dependencies
+      command: npm install
+      args:
+        chdir: /home/ubuntu/my-node-app
+
+    - name: Run the Node.js app
+      command: node server.js
+      args:
+        chdir: /home/ec2-user/my-node-app
